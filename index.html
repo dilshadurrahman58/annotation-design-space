@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Annotation Design Space &amp; Taxonomy: IEEE TVCG 2024</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <a class="skip-nav" href="#main-content">Skip to main content</a>
+
+  <!-- ── Header ───────────────────────────────────────── -->
+  <header class="top">
+    <div class="top__inner">
+      <div class="top__title">
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:3px;">
+          <h1>Annotation Design Space &amp; Taxonomy</h1>
+          <a href="https://ieeexplore.ieee.org/abstract/document/11130921" target="_blank" rel="noopener"
+            class="btn btn--paper">Read Paper</a>
+        </div>
+        <div class="top__sub">A Qualitative Analysis of Common Practices in Annotations: A Taxonomy and Design Space
+        </div>
+        <div class="top__authors">
+          <strong>Md Dilshadur Rahman</strong>, Ghulam Jilani Quadri, Bhavana Doppalapudi, Danielle Albers Szafir, Paul
+          Rosen<br>
+          <em>IEEE Transactions on Visualization and Computer Graphics</em>
+          <span class="top__year">2024</span>
+        </div>
+        <div class="top__nav">
+          <a href="#overview" onclick="scrollTo_(event,'overview')">Overview</a>
+          <a href="#design-space" onclick="scrollTo_(event,'design-space')">Design Space</a>
+          <a href="#methodology" onclick="scrollTo_(event,'methodology')">Methodology</a>
+          <a href="#taxonomy" onclick="scrollTo_(event,'taxonomy')">Taxonomy</a>
+          <a href="#case-studies" onclick="scrollTo_(event,'case-studies')">Case Studies</a>
+        </div>
+      </div>
+      <div class="top__actions">
+        <a href="https://shorturl.at/bAGM1" target="_blank" rel="noopener" class="btn">Supplemental ↗</a>
+        <button class="btn top-copy" data-copy-bib onclick="copyBib()">Copy BibTeX</button>
+        <div class="toggle-sw" title="Toggle dark mode">
+          <input type="checkbox" id="dmtoggle" />
+          <label for="dmtoggle" class="toggle-lbl">
+            <span class="toggle-inner"></span>
+            <span class="ti sun">☀</span>
+            <span class="ti moon">☽</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="page">
+
+      <!-- ── Overview ──────────────────────────────────────── -->
+      <section class="section" id="overview" aria-label="Overview" style="padding-top:24px;border-top:none!important;">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">01 · Overview</span>
+          <h2 class="sec-title sec-title--hero">Contributions</h2>
+          <p class="sec-desc sec-desc--hero">A qualitative study of
+            1,888 annotated charts across 14 chart types. The paper identifies seven annotation types and organizes
+            annotation design around task, annotation form, and data source.</p>
+        </div>
+
+        <div class="overview-abstract fu d1" style="margin-top:1.7em;">
+          <h3 class="contrib-title">Key Contributions</h3>
+          <ul class="contrib-list">
+            <li>
+              <span class="contrib-dot" style="background:var(--why-c);"></span>
+              <div class="contrib-content">
+                <span class="contrib-key">Taxonomy:</span>
+                We analyze <b>N=1,888</b> annotated charts across 14 chart types and identify seven recurring
+                annotation types. The taxonomy is based on observed practice in real charts.
+              </div>
+            </li>
+            <li>
+              <span class="contrib-dot" style="background:var(--how-c);"></span>
+              <div class="contrib-content">
+                <span class="contrib-key">Design Space:</span>
+                We organize annotation decisions with three questions: <b style="color:var(--why-c)">[Why]</b> for the
+                task, <b style="color:var(--how-c)">[How]</b> for annotation types and ensembles, and <b
+                  style="color:var(--what-c)">[What]</b> for whether annotation content is internal, derived, or
+                external.
+              </div>
+            </li>
+            <li>
+              <span class="contrib-dot" style="background:var(--what-c);"></span>
+              <div class="contrib-content">
+                <span class="contrib-key">Corpus &amp; Case Studies:</span>
+                We provide the annotated chart dataset and use three published charts to show how the design space can
+                guide annotation choices.
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- ── Design Space ──────────────────────────────────── -->
+      <section class="section" id="design-space" aria-label="Design Space">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">02 · Design Space</span>
+          <h2 class="sec-title">Why, How, and What</h2>
+          <p class="sec-desc">The paper frames annotation design with three questions. <strong
+              style="color:var(--why-c)">Why</strong> asks what task the annotation supports. <strong
+              style="color:var(--how-c)">How</strong> covers the annotation type or ensemble used to support that task.
+            <strong style="color:var(--what-c)">What</strong> identifies whether the annotation content comes from the
+            chart data, from a calculation, or from outside knowledge.</p>
+        </div>
+
+        <div class="ds-overview fu d2">
+          <figure class="ds-overview-fig" aria-label="Design space summary figure">
+            <img class="design-space-img" src="assets/design-space/design-space.png"
+              alt="Original design-space figure from the paper showing Why, How, and What relationships across annotation types"
+              loading="lazy" />
+            <figcaption class="design-space-cap">Original figure from the paper. The left panel shows task support. The
+              right panel shows annotation usage by chart type and ensemble. The bottom panel groups annotations by data
+              source.</figcaption>
+          </figure>
+
+          <div class="ds-overview-copy">
+            <h3>Design Space Guide</h3>
+            <div class="ov-pill-grid">
+              <div class="ov-pill"><strong style="color:var(--why-c)">Why: Task intent.</strong> Begin with the
+                task. All seven annotation types support Identify. Most also support Compare. Text, glyphs, and
+                indicators support Summarize. Only text supports Present.</div>
+              <div class="ov-pill"><strong style="color:var(--how-c)">How: Form and ensemble.</strong> Select the
+                annotation type that fits the task. The paper identifies seven types and shows that many charts use
+                ensembles when one type is not enough. Connector plus text is a common example.</div>
+              <div class="ov-pill"><strong style="color:var(--what-c)">What: Data provenance.</strong> Content source
+                can be internal, derived, or external. The same annotation type can draw from different sources
+                depending on the message the author wants to communicate.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Methodology ────────────────────────────────────── -->
+      <section class="section" id="methodology" aria-label="Methodology">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">03 · Methodology</span>
+          <h2 class="sec-title">Dataset Construction</h2>
+          <p class="sec-desc">The dataset came from Google Images and was narrowed through duplicate removal and chart
+            screening. Two coders then iteratively labeled the remaining charts to identify recurring annotation types
+            and usage patterns.
+          </p>
+        </div>
+
+        <div class="method-shell fu d1">
+          <div class="method-summary" aria-label="Study summary">
+            <article class="method-metric">
+              <div class="method-metric-n">8,768</div>
+              <div class="method-metric-l">Retrieved images</div>
+            </article>
+            <article class="method-metric">
+              <div class="method-metric-n">2,677</div>
+              <div class="method-metric-l">Candidate charts</div>
+            </article>
+            <article class="method-metric">
+              <div class="method-metric-n">1,888</div>
+              <div class="method-metric-l">Charts analyzed</div>
+            </article>
+            <article class="method-metric">
+              <div class="method-metric-n">14</div>
+              <div class="method-metric-l">Chart types</div>
+            </article>
+            <article class="method-metric">
+              <div class="method-metric-n">7</div>
+              <div class="method-metric-l">Annotation types</div>
+            </article>
+            <article class="method-metric">
+              <div class="method-metric-n">0.886</div>
+              <div class="method-metric-l">Average Cohen's kappa</div>
+            </article>
+          </div>
+
+          <div class="method-layout">
+            <figure class="method-card method-card--figure">
+              <div class="method-card-head">Study Figure</div>
+              <div class="method-fig-wrap">
+                <div class="method-fig-stage">
+                  <img class="method-fig-img" src="assets/overview/design-space-paper-overview-transparent.png"
+                    alt="Cropped methodology figure from the paper showing collection filtering and coding workflow"
+                    loading="lazy" />
+                </div>
+              </div>
+              <figcaption>After duplicate removal and chart screening, 2,677 candidate charts remained. The final
+                analysis used 1,888 charts from one coder's labels across 14 chart types.</figcaption>
+            </figure>
+
+            <div class="method-card method-card--copy">
+              <div class="method-card-head">Study Process</div>
+              <ol class="method-steps">
+                <li class="method-step">
+                  <div class="method-step-head">
+                    <span class="method-step-k">Collection</span>
+                    <span class="method-step-v">Google Images</span>
+                  </div>
+                  <p>Retrieved 8,768 annotated chart images across 14 chart types.</p>
+                </li>
+                <li class="method-step">
+                  <div class="method-step-head">
+                    <span class="method-step-k">Screening</span>
+                    <span class="method-step-v">2,677 candidates</span>
+                  </div>
+                  <p>Removed 1,244 duplicates and excluded 4,847 charts that were out of scope, unclear, unannotated,
+                    or not based on real data.</p>
+                </li>
+                <li class="method-step">
+                  <div class="method-step-head">
+                    <span class="method-step-k">Coding</span>
+                    <span class="method-step-v">7 final types</span>
+                  </div>
+                  <p>Two coders worked in multiple rounds, starting from five annotation types from prior work and
+                    refining them into seven recurring types.</p>
+                </li>
+              </ol>
+
+              <p class="method-note"><strong>Reliability:</strong> The first coder retained 1,888 charts for analysis.
+                The average Cohen's kappa across coders was 0.886.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Taxonomy ──────────────────────────────────────── -->
+      <section class="section" id="taxonomy" aria-label="Taxonomy">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">04 · Taxonomy</span>
+          <h2 class="sec-title">Seven Annotation Types</h2>
+          <p class="sec-desc">These seven cards summarize the annotation types reported in the paper. Open a card to see
+            the tasks each type supports, common ensembles, likely data sources, and where it appears in the case
+            studies.</p>
+        </div>
+        <div class="tax-shell fu d1">
+          <div class="tax-toolbar">
+            <div class="tax-toolbar-copy">
+              <div class="tax-toolbar-k">Filter and Explore</div>
+              <p class="tax-toolbar-desc">Filter by task. The same initials shown on the filters are repeated on each
+                annotation card.</p>
+            </div>
+          </div>
+          <div class="tax-controls-row">
+            <div class="tax-controls" id="tax-controls" role="toolbar" aria-label="Filter annotation types by analytic task"></div>
+            <div class="tax-status" id="tax-status" aria-live="polite"></div>
+          </div>
+          <div class="tax-grid" id="tax-grid"></div>
+        </div>
+      </section>
+
+      <!-- ── Case Studies ──────────────────────────────────── -->
+      <section class="section" id="case-studies" aria-label="Case Studies">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">05 · Case Studies</span>
+          <h2 class="sec-title">Case Studies</h2>
+          <p class="sec-desc">The paper applies the design space to three published charts. Each case shows how
+            annotation choices support a task, take a visual form, and draw from a data source.</p>
+        </div>
+        <div class="cs-shell fu d1">
+          <div class="cs-toolbar">
+            <div class="cs-toolbar-copy">
+              <div class="cs-toolbar-k">How to Read</div>
+              <p class="cs-toolbar-desc">Select a case. The left side shows the annotated figure and main points. The
+                right side lists the annotation rows by task, form, and source.</p>
+            </div>
+          </div>
+          <div class="cs-controls-row">
+            <div class="cs-tabs" id="cs-tabs" role="tablist" aria-label="Case studies"></div>
+            <div class="cs-status" id="cs-status" aria-live="polite"></div>
+          </div>
+          <div class="cs-panels" id="cs-panels"></div>
+        </div>
+      </section>
+
+      <!-- ── Citation ──────────────────────────────────────── -->
+      <section class="section" id="cite">
+        <div class="sec-head fu">
+          <span class="sec-eyebrow">06 · Citation</span>
+          <h2 class="sec-title">Cite This Work</h2>
+        </div>
+        <div class="cite-wrap fu d1">
+          <pre class="cite-block" id="bibtext">@article{rahman2024annotation,
+  title   = {A Qualitative Analysis of Common Practices in
+             Annotations: A Taxonomy and Design Space},
+  author  = {Rahman, Md Dilshadur and Quadri, Ghulam Jilani
+             and Doppalapudi, Bhavana and Szafir, Danielle Albers
+             and Rosen, Paul},
+  journal = {IEEE Transactions on Visualization and Computer Graphics},
+  year    = {2024},
+  doi     = {10.1109/TVCG.2025.3565855}
+}</pre>
+          <button class="cite-copy" data-copy-bib onclick="copyBib()">Copy BibTeX</button>
+        </div>
+      </section>
+
+    </div><!-- /page -->
+  </main>
+
+  <footer class="footer">
+    © 2024 Md Dilshadur Rahman, Ghulam Jilani Quadri, Bhavana Doppalapudi, Danielle Albers Szafir, Paul Rosen
+    &nbsp;·&nbsp;
+    <a href="https://arxiv.org/abs/2306.06043" target="_blank">arXiv:2306.06043</a> &nbsp;·&nbsp;
+    <a href="https://ieeexplore.ieee.org/abstract/document/11130921" target="_blank">IEEE Transactions on Visualization
+      and Computer Graphics</a> &nbsp;·&nbsp;
+    <a href="https://shorturl.at/bAGM1" target="_blank">Supplemental Materials</a>
+  </footer>
+
+  <!-- Taxonomy drawer overlay + panel -->
+  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()" aria-hidden="true"></div>
+  <div class="tax-drawer" id="tax-drawer" role="dialog" aria-modal="true" aria-hidden="true"></div>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+
+  <!-- Nav dots -->
+  <nav class="nav-dots" aria-label="Section navigation">
+    <button class="nav-dot active" data-t="overview" title="Overview"></button>
+    <button class="nav-dot" data-t="design-space" title="Design Space"></button>
+    <button class="nav-dot" data-t="methodology" title="Methodology"></button>
+    <button class="nav-dot" data-t="taxonomy" title="Taxonomy"></button>
+    <button class="nav-dot" data-t="case-studies" title="Case Studies"></button>
+    <button class="nav-dot" data-t="cite" title="Citation"></button>
+  </nav>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
