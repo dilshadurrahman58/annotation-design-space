@@ -1,0 +1,318 @@
+{
+  "WHY_HOW": {
+    "present": [
+      "text"
+    ],
+    "identify": [
+      "enclosure",
+      "connector",
+      "text",
+      "glyph",
+      "color",
+      "indicator",
+      "geometric"
+    ],
+    "summarize": [
+      "text",
+      "glyph",
+      "indicator"
+    ],
+    "compare": [
+      "enclosure",
+      "connector",
+      "text",
+      "glyph",
+      "color",
+      "indicator"
+    ]
+  },
+  "ANN_WHAT": {
+    "enclosure": [
+      "internal",
+      "external"
+    ],
+    "connector": [
+      "external"
+    ],
+    "text": [
+      "internal",
+      "derived",
+      "external"
+    ],
+    "glyph": [
+      "internal",
+      "external"
+    ],
+    "color": [
+      "external",
+      "derived"
+    ],
+    "indicator": [
+      "derived",
+      "external"
+    ],
+    "geometric": [
+      "external"
+    ]
+  },
+  "WHY_INFO": {
+    "present": {
+      "t": "Present, consume task",
+      "d": "Only text supports Present in the paper. It is used to add context that is not contained in the chart data, such as events, explanation, or narrative framing."
+    },
+    "identify": {
+      "t": "Identify, query task",
+      "d": "All seven annotation types support Identify. Use it when the goal is to direct attention to a specific point, group, region, or time."
+    },
+    "summarize": {
+      "t": "Summarize, query task",
+      "d": "Text, glyphs, and indicators support Summarize. These annotations help readers read an overall trend, statistic, or high level takeaway."
+    },
+    "compare": {
+      "t": "Compare, query task",
+      "d": "Enclosure, connector, text, glyph, color, and indicator support Compare. They help readers judge differences between values, groups, or trends."
+    }
+  },
+  "ANN_INFO": {
+    "enclosure": {
+      "t": "Enclosure, 31% (588 charts)",
+      "d": "Closed boundaries such as rectangles, ellipses, and brackets. They isolate or group chart marks and often work with text or connectors.",
+      "ens": [
+        "Enclosure + Text",
+        "Enclosure + Connector + Text",
+        "Color + Enclosure + Text"
+      ]
+    },
+    "connector": {
+      "t": "Connector, 21% (393 charts)",
+      "d": "Lines or arrows that link an annotation to the mark it refers to. They reduce ambiguity and usually appear with text.",
+      "ens": [
+        "Connector + Text",
+        "Enclosure + Connector + Text"
+      ]
+    },
+    "text": {
+      "t": "Text, 76% (1,434 charts)",
+      "d": "Words or sentences used for labels, descriptions, summaries, or added context. Text appears in 1,434 of 1,888 charts and is the only type that supports Present.",
+      "ens": [
+        "Connector + Text",
+        "Enclosure + Text",
+        "Indicator + Text",
+        "Color + Enclosure + Text"
+      ]
+    },
+    "glyph": {
+      "t": "Glyph, 14% (270 charts)",
+      "d": "Symbols or shapes that mark points, events, or categories. The paper shows them most often in maps and line charts.",
+      "ens": [
+        "Glyph + Color"
+      ]
+    },
+    "color": {
+      "t": "Color, 14% (259 charts)",
+      "d": "Added color used as an annotation layer to highlight or distinguish marks. Color that is already part of the chart encoding does not count as an annotation.",
+      "ens": [
+        "Glyph + Color",
+        "Color + Enclosure + Text"
+      ]
+    },
+    "indicator": {
+      "t": "Indicator, 22% (424 charts)",
+      "d": "Reference lines and overlays used for trends, thresholds, averages, or correlations. Many indicator annotations are derived from the underlying data.",
+      "ens": [
+        "Indicator + Text"
+      ]
+    },
+    "geometric": {
+      "t": "Geometric, 3% (61 charts)",
+      "d": "Spatial modifications such as zoom boxes or exploded slices that focus attention on one area. This type is rare and only supports Identify in the paper.",
+      "ens": []
+    }
+  },
+  "TAXON": [
+    {
+      "name": "Enclosure",
+      "icon": "□",
+      "pct": 31,
+      "n": "588",
+      "c": "enc",
+      "tasks": [
+        "Identify",
+        "Compare"
+      ],
+      "desc": "Closed boundaries such as rectangles, ellipses, and brackets. They isolate or group chart marks and often work with text or connectors."
+    },
+    {
+      "name": "Connector",
+      "icon": "&#10230;",
+      "pct": 21,
+      "n": "393",
+      "c": "con",
+      "tasks": [
+        "Identify",
+        "Compare"
+      ],
+      "desc": "Lines or arrows that link an annotation to the mark it refers to. They reduce ambiguity and usually appear with text."
+    },
+    {
+      "name": "Text",
+      "icon": "T",
+      "pct": 76,
+      "n": "1,434",
+      "c": "txt",
+      "tasks": [
+        "Present",
+        "Identify",
+        "Summarize",
+        "Compare"
+      ],
+      "desc": "Words or sentences used for labels, descriptions, summaries, or added context. Text appears in 1,434 of 1,888 charts and is the only type that supports Present."
+    },
+    {
+      "name": "Glyph",
+      "icon": "&#9654;",
+      "pct": 14,
+      "n": "270",
+      "c": "gly",
+      "tasks": [
+        "Identify",
+        "Compare"
+      ],
+      "desc": "Symbols or shapes that mark points, events, or categories. The paper shows them most often in maps and line charts."
+    },
+    {
+      "name": "Color",
+      "icon": "&#9679;",
+      "pct": 14,
+      "n": "259",
+      "c": "col",
+      "tasks": [
+        "Identify",
+        "Compare"
+      ],
+      "desc": "Added color used as an annotation layer to highlight or distinguish marks. Color that is already part of the chart encoding does not count as an annotation."
+    },
+    {
+      "name": "Indicator",
+      "icon": "&#8597;",
+      "pct": 22,
+      "n": "424",
+      "c": "ind",
+      "tasks": [
+        "Identify",
+        "Summarize",
+        "Compare"
+      ],
+      "desc": "Reference lines and overlays used for trends, thresholds, averages, or correlations. Many indicator annotations are derived from the underlying data."
+    },
+    {
+      "name": "Geometric",
+      "icon": "&#8853;",
+      "pct": 3,
+      "n": "61",
+      "c": "geo",
+      "tasks": [
+        "Identify"
+      ],
+      "desc": "Spatial modifications such as zoom boxes or exploded slices that focus attention on one area. This type is rare and only supports Identify in the paper."
+    }
+  ],
+  "CS": [
+    {
+      "label": "Case 1: The Economist (Deaths of Despair)",
+      "chart": "Line Chart",
+      "source": "The Economist, 2023",
+      "image": "assets/case-studies/case1-economist.png",
+      "imageAlt": "Case study figure from The Economist showing deaths of despair trends with annotation overlays",
+      "figureNote": "Cropped from the paper's Case Study 1 figure (The Economist example).",
+      "desc": "The paper uses this line chart to show how annotations can mark a key event, summarize trend change, and compare periods in a time series.",
+      "rows": [
+        {
+          "why": "Identify",
+          "how": "Indicator + Text",
+          "what": "External",
+          "note": "Look for the vertical line and label that mark the introduction of OxyContin. This turns one year into a clear reference point on the timeline."
+        },
+        {
+          "why": "Summarize",
+          "how": "Indicator (trend projection) + Text",
+          "what": "Derived + External",
+          "note": "Look for the projected guide line and the nearby text. The line extends the earlier downward trend so readers can see where the observed series breaks from it."
+        },
+        {
+          "why": "Compare",
+          "how": "Color + Enclosure + Text",
+          "what": "External",
+          "note": "Look for the colored enclosed region and label that separate one period from another. This helps readers compare how the trend changes across phases."
+        },
+        {
+          "why": "Compare",
+          "how": "Connector + Text",
+          "what": "External",
+          "note": "Look for the text callout connected to the line. The connector shows exactly which part of the trend the comparison refers to."
+        }
+      ],
+      "takeaways": [
+        "One event marker anchors the timeline.",
+        "Indicator and text together show how the trend changes after that event.",
+        "Color, enclosure, and connector callouts support comparison across periods."
+      ]
+    },
+    {
+      "label": "Case 2: Wall Street Journal (Inflation)",
+      "chart": "Waterfall / Bar Chart",
+      "source": "Wall Street Journal, 2021",
+      "image": "assets/case-studies/case2-wsj.jpg",
+      "imageAlt": "Case study figure from Wall Street Journal showing inflation bars and annotation callouts",
+      "figureNote": "Cropped from the paper's Case Study 2 figure (WSJ inflation example).",
+      "desc": "The paper uses this waterfall chart to show how annotations can make a threshold visible and connect article context to specific bars.",
+      "rows": [
+        {
+          "why": "Identify",
+          "how": "Color + Enclosure + Text",
+          "what": "External",
+          "note": "Look for the highlighted enclosed area and the text that marks the 2% threshold. This shows which values fall below the target."
+        },
+        {
+          "why": "Present",
+          "how": "Connector + Text",
+          "what": "External",
+          "note": "Look for the callout text and connector lines attached to specific bars. They add article context and make it clear which bars the explanation refers to."
+        }
+      ],
+      "takeaways": [
+        "The threshold is made explicit with color, enclosure, and text.",
+        "Connector callouts add context without leaving the bars ambiguous.",
+        "All annotations in this case come from external context."
+      ]
+    },
+    {
+      "label": "Case 3: Washington Post (COVID-19 Peaks)",
+      "chart": "Line Chart",
+      "source": "Washington Post, 2022",
+      "image": "assets/case-studies/case3-wapo.jpg",
+      "imageAlt": "Case study figure from Washington Post showing COVID cases deaths and hospitalization waves with annotations",
+      "figureNote": "Cropped from the paper's Case Study 3 figure (Washington Post COVID-19 example).",
+      "desc": "The paper uses this line chart to show how annotations can mark COVID-19 wave peaks and add context about cases, hospitalizations, and deaths.",
+      "rows": [
+        {
+          "why": "Identify",
+          "how": "Color + Enclosure + Text",
+          "what": "External",
+          "note": "Look for the colored enclosed regions and labels around the peaks. They mark the different COVID-19 waves so readers can find them quickly."
+        },
+        {
+          "why": "Present",
+          "how": "Connector + Text",
+          "what": "Internal + External",
+          "note": "Look for the text callouts and arrows attached to the peaks. The callouts add article context, and some of the numbers come directly from the chart data."
+        }
+      ],
+      "takeaways": [
+        "Wave labels help readers separate overlapping peaks.",
+        "Connector callouts tie article context to specific points in the lines.",
+        "This case mixes external explanation with some internal values."
+      ]
+    }
+  ]
+}
