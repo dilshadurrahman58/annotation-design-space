@@ -3,339 +3,663 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="light dark" />
-  <title>Annotation Design Space &amp; Taxonomy: IEEE TVCG 2024</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Annotation Design Space · A Taxonomy and Design Space for Chart Annotations</title>
+  <meta name="description"
+    content="Seven annotation types and a Why, How, What design space, from a qualitative study of 1,888 annotated charts across 14 chart types. Companion to the IEEE TVCG paper presented at IEEE VIS 2024." />
+  <meta name="theme-color" id="theme-color-meta" content="#F5F4F0" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="A Qualitative Analysis of Common Practices in Annotations: A Taxonomy and Design Space" />
+  <meta property="og:description"
+    content="Seven annotation types and a Why, How, What design space, from 1,888 annotated charts. The taxonomy, the design space, and three case studies from the IEEE TVCG paper." />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <script>
+    (() => {
+      const root = document.documentElement;
+      root.classList.add('js');
+      let theme = null;
+      try { theme = localStorage.getItem('designspace-theme'); } catch (e) { }
+      if (theme !== 'light' && theme !== 'dark') {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      root.dataset.theme = theme;
+      document.getElementById('theme-color-meta').setAttribute('content', theme === 'dark' ? '#0E1013' : '#F5F4F0');
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/styles.css" />
 </head>
 
 <body>
+  <a href="#annotation" class="skip-link">Skip to the content</a>
 
-  <a class="skip-nav" href="#main-content">Skip to main content</a>
-
-  <!-- ── Header ───────────────────────────────────────── -->
-  <header class="top">
-    <div class="top__inner">
-      <div class="top__title">
-        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:3px;">
-          <h1>Annotation Design Space &amp; Taxonomy</h1>
-          <a href="https://ieeexplore.ieee.org/abstract/document/11130921" target="_blank" rel="noopener"
-            class="btn btn--paper">Read Paper</a>
-        </div>
-        <div class="top__sub">A Qualitative Analysis of Common Practices in Annotations: A Taxonomy and Design Space
-        </div>
-        <div class="top__authors">
-          <strong>Md Dilshadur Rahman</strong>, Ghulam Jilani Quadri, Bhavana Doppalapudi, Danielle Albers Szafir, Paul
-          Rosen<br>
-          <em>IEEE Transactions on Visualization and Computer Graphics</em>
-          <span class="top__year">2024</span>
-        </div>
-        <div class="top__nav">
-          <a href="#overview" onclick="scrollTo_(event,'overview')">Overview</a>
-          <a href="#design-space" onclick="scrollTo_(event,'design-space')">Design Space</a>
-          <a href="#methodology" onclick="scrollTo_(event,'methodology')">Methodology</a>
-          <a href="#taxonomy" onclick="scrollTo_(event,'taxonomy')">Taxonomy</a>
-          <a href="#case-studies" onclick="scrollTo_(event,'case-studies')">Case Studies</a>
-        </div>
-      </div>
-      <div class="top__actions">
-        <a href="https://shorturl.at/bAGM1" target="_blank" rel="noopener" class="btn">Supplemental ↗</a>
-        <button class="btn top-copy" data-copy-bib onclick="copyBib()">Copy BibTeX</button>
-        <div class="toggle-sw" title="Toggle dark mode">
-          <input type="checkbox" id="dmtoggle" />
-          <label for="dmtoggle" class="toggle-lbl">
-            <span class="toggle-inner"></span>
-            <span class="ti sun">☀</span>
-            <span class="ti moon">☽</span>
-          </label>
-        </div>
-      </div>
+  <!-- Top bar -->
+  <header class="bar">
+    <div class="wrap bar__inner">
+      <a class="mark" href="#top" aria-label="Annotation Design Space, back to top">
+        <svg class="mark__glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <rect x="3" y="12" width="26" height="8" rx="1.5" class="mark__hl" />
+          <g fill="currentColor">
+            <rect x="5" y="5" width="6" height="6" rx="1" fill-opacity=".28" />
+            <rect x="21" y="5" width="6" height="6" rx="1" fill-opacity=".6" />
+            <rect x="13" y="13" width="6" height="6" rx="1" />
+            <rect x="21" y="13" width="6" height="6" rx="1" fill-opacity=".6" />
+            <rect x="5" y="21" width="6" height="6" rx="1" fill-opacity=".6" />
+            <rect x="21" y="21" width="6" height="6" rx="1" />
+          </g>
+          <rect x="5" y="13" width="6" height="6" rx="1" fill="var(--warm)" />
+        </svg>
+        <span>Annotation Design Space</span>
+      </a>
+      <nav class="bar__nav" aria-label="Page">
+        <a class="u quiet" href="#types">Types</a>
+        <a class="u quiet" href="#space">Design space</a>
+        <a class="u quiet" href="#cases">Case studies</a>
+        <a class="u quiet" href="#method">Method</a>
+        <a class="u quiet bar__ext" href="https://doi.org/10.1109/TVCG.2024.3456359" target="_blank"
+          rel="noopener">Paper<span aria-hidden="true">&nbsp;↗</span></a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" />
+          </svg>
+        </button>
+      </nav>
     </div>
   </header>
 
-  <main id="main-content">
-    <div class="page">
+  <main id="top">
+    <!-- Masthead -->
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow reveal" style="--d:0">
+          <span>IEEE TVCG</span><span class="sep" aria-hidden="true">·</span><span>IEEE VIS 2024</span>
+        </p>
+        <h1 class="hero__title reveal" style="--d:1">
+          A Qualitative Analysis of Common Practices in
+          <em class="marked"><span class="marked__band" aria-hidden="true"></span><span
+              class="marked__word">Annotations</span></em>
+        </h1>
+        <p class="hero__sub reveal" style="--d:2">A Taxonomy and Design Space</p>
+        <p class="hero__authors reveal" style="--d:3">
+          <a class="u" href="https://dilshadur.com/" target="_blank" rel="noopener">Md Dilshadur Rahman</a>,
+          <a class="u" href="https://www.jiquadcs.com/" target="_blank" rel="noopener">Ghulam Jilani Quadri</a>,
+          <a class="u" href="https://www.linkedin.com/in/doppalapudib/" target="_blank" rel="noopener">Bhavana
+            Doppalapudi</a>,
+          <a class="u" href="https://danielleszafir.com/" target="_blank" rel="noopener">Danielle Albers Szafir</a>, and
+          <a class="u" href="https://cspaul.com/" target="_blank" rel="noopener">Paul Rosen</a>
+        </p>
 
-      <!-- ── Overview ──────────────────────────────────────── -->
-      <section class="section" id="overview" aria-label="Overview" style="padding-top:24px;border-top:none!important;">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">01 · Overview</span>
-          <h2 class="sec-title sec-title--hero">Contributions</h2>
-          <p class="sec-desc sec-desc--hero">A qualitative study of
-            1,888 annotated charts across 14 chart types. The paper identifies seven annotation types and organizes
-            annotation design around task, annotation form, and data source.</p>
-        </div>
-
-        <div class="overview-abstract fu d1" style="margin-top:1.7em;">
-          <h3 class="contrib-title">Key Contributions</h3>
-          <ul class="contrib-list">
-            <li>
-              <span class="contrib-dot" style="background:var(--why-c);"></span>
-              <div class="contrib-content">
-                <span class="contrib-key">Taxonomy:</span>
-                We analyze <b>N=1,888</b> annotated charts across 14 chart types and identify seven recurring
-                annotation types. The taxonomy is based on observed practice in real charts.
-              </div>
-            </li>
-            <li>
-              <span class="contrib-dot" style="background:var(--how-c);"></span>
-              <div class="contrib-content">
-                <span class="contrib-key">Design Space:</span>
-                We organize annotation decisions with three questions: <b style="color:var(--why-c)">[Why]</b> for the
-                task, <b style="color:var(--how-c)">[How]</b> for annotation types and ensembles, and <b
-                  style="color:var(--what-c)">[What]</b> for whether annotation content is internal, derived, or
-                external.
-              </div>
-            </li>
-            <li>
-              <span class="contrib-dot" style="background:var(--what-c);"></span>
-              <div class="contrib-content">
-                <span class="contrib-key">Corpus &amp; Case Studies:</span>
-                We provide the annotated chart dataset and use three published charts to show how the design space can
-                guide annotation choices.
-              </div>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <!-- ── Design Space ──────────────────────────────────── -->
-      <section class="section" id="design-space" aria-label="Design Space">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">02 · Design Space</span>
-          <h2 class="sec-title">Why, How, and What</h2>
-          <p class="sec-desc">The paper frames annotation design with three questions. <strong
-              style="color:var(--why-c)">Why</strong> asks what task the annotation supports. <strong
-              style="color:var(--how-c)">How</strong> covers the annotation type or ensemble used to support that task.
-            <strong style="color:var(--what-c)">What</strong> identifies whether the annotation content comes from the
-            chart data, from a calculation, or from outside knowledge.</p>
-        </div>
-
-        <div class="ds-overview fu d2">
-          <figure class="ds-overview-fig" aria-label="Design space summary figure">
-            <img class="design-space-img" src="assets/design-space/design-space.png"
-              alt="Original design-space figure from the paper showing Why, How, and What relationships across annotation types"
-              loading="lazy" />
-            <figcaption class="design-space-cap">Original figure from the paper. The left panel shows task support. The
-              right panel shows annotation usage by chart type and ensemble. The bottom panel groups annotations by data
-              source.</figcaption>
-          </figure>
-
-          <div class="ds-overview-copy">
-            <h3>Design Space Guide</h3>
-            <div class="ov-pill-grid">
-              <div class="ov-pill"><strong style="color:var(--why-c)">Why: Task intent.</strong> Begin with the
-                task. All seven annotation types support Identify. Most also support Compare. Text, glyphs, and
-                indicators support Summarize. Only text supports Present.</div>
-              <div class="ov-pill"><strong style="color:var(--how-c)">How: Form and ensemble.</strong> Select the
-                annotation type that fits the task. The paper identifies seven types and shows that many charts use
-                ensembles when one type is not enough. Connector plus text is a common example.</div>
-              <div class="ov-pill"><strong style="color:var(--what-c)">What: Data provenance.</strong> Content source
-                can be internal, derived, or external. The same annotation type can draw from different sources
-                depending on the message the author wants to communicate.</div>
+        <div class="hero__grid">
+          <div class="hero__lede reveal" style="--d:4">
+            <p>
+              Annotations are how a chart points: a box around a cluster, an arrow to a note, a line at the
+              average. To see how people annotate in practice, we coded <strong>1,888 annotated static
+                charts</strong> of 14 types, gathered from Google Images. Seven annotation types kept coming back.
+              We organized them into a design space that asks three questions of every annotation:
+              <em class="q q--why">Why?</em> the task it supports, <em class="q q--how">How?</em> the types that
+              carry it, and <em class="q q--what">What?</em> the data it comes from.
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn--solid" href="https://doi.org/10.1109/TVCG.2024.3456359" target="_blank"
+                rel="noopener">Read the paper<span aria-hidden="true">↗</span></a>
+              <a class="btn" href="https://arxiv.org/abs/2306.06043" target="_blank" rel="noopener">Preprint<span
+                  aria-hidden="true">↗</span></a>
+              <a class="btn btn--ghost" href="https://shorturl.at/bAGM1" target="_blank" rel="noopener">Charts and
+                supplemental materials<span aria-hidden="true">↗</span></a>
             </div>
           </div>
-        </div>
-      </section>
 
-      <!-- ── Methodology ────────────────────────────────────── -->
-      <section class="section" id="methodology" aria-label="Methodology">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">03 · Methodology</span>
-          <h2 class="sec-title">Dataset Construction</h2>
-          <p class="sec-desc">The dataset came from Google Images and was narrowed through duplicate removal and chart
-            screening. Two coders then iteratively labeled the remaining charts to identify recurring annotation types
-            and usage patterns.
+          <dl class="stats reveal" style="--d:5" aria-label="The study at a glance">
+            <div>
+              <dt>Annotated charts</dt>
+              <dd>1,888</dd>
+            </div>
+            <div>
+              <dt>Chart types</dt>
+              <dd>14</dd>
+            </div>
+            <div>
+              <dt>Annotation types</dt>
+              <dd>7</dd>
+            </div>
+            <div>
+              <dt>Agreement, Cohen's κ</dt>
+              <dd>0.886</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is an annotation -->
+    <section class="sec" id="annotation" aria-labelledby="annotation-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="annotation-heading">What counts as an <em>annotation</em></h2>
+          <p class="section-head__note">Prior definitions differed, so the paper sets its own. It separates the
+            chart's basic elements from what is added on top of them.</p>
+        </div>
+
+        <div class="defn">
+          <div class="defn__text in-view">
+            <blockquote class="defn__quote">
+              <p>Annotations are supplementary elements, such as graphical shapes, text, or color, added to
+                pre-existing elements of a visualization to provide additional context beyond the basic data presented
+                and to draw attention to specific portions or elements of the data, thereby enhancing the
+                expressiveness of the visualization.</p>
+            </blockquote>
+            <p class="defn__attr">The paper's definition, Sect. 2</p>
+            <dl class="defn__parts">
+              <div>
+                <dt>Basic elements</dt>
+                <dd>What a chart needs to convey its information without outside aids: usually axes, axis labels,
+                  data points, titles, legends, and gridlines.</dd>
+              </div>
+              <div>
+                <dt>Supplementary elements</dt>
+                <dd>Additional text or graphics that make the chart easier to understand and more expressive. These
+                  are the annotations.</dd>
+              </div>
+            </dl>
+          </div>
+
+          <figure class="ba in-view" style="--d:1" aria-labelledby="ba-cap">
+            <div class="ba__top">
+              <span class="label">Drag to compare</span>
+              <div class="seg seg--sm" role="group" aria-label="Show the chart">
+                <button type="button" data-ba="100" aria-pressed="false">Without</button>
+                <button type="button" data-ba="0" aria-pressed="false">With annotations</button>
+              </div>
+            </div>
+            <div class="sheet ba__sheet" id="ba">
+              <div class="ba__art">
+                <img src="images/fig2a.webp" width="987" height="489" decoding="async"
+                  alt="The Washington Post line chart of COVID-19 cases, deaths, and hospitalizations as a percentage of the January 2021 peak, with no annotations." />
+                <div class="ba__over" id="ba-over">
+                  <img src="images/fig2d.webp" width="987" height="489" decoding="async"
+                    alt="The same chart with gray bands labeled Jan. 2021 peak, Delta wave, and Omicron wave, and two notes with arrows giving case numbers and context." />
+                </div>
+                <span class="ba__tag ba__tag--l" aria-hidden="true">Without</span>
+                <span class="ba__tag ba__tag--r" aria-hidden="true">With annotations</span>
+                <span class="ba__handle" aria-hidden="true"><span></span></span>
+                <input class="ba__range" id="ba-range" type="range" min="0" max="100" value="50"
+                  aria-label="Divider: the chart without annotations shows to its left, with annotations to its right" />
+              </div>
+            </div>
+            <figcaption class="figcap" id="ba-cap"><span class="figcap__n">Fig. 2a, 2d</span><span>A line chart from
+                The Washington Post, without its annotations and with them. The axes, lines, legend, and gridlines are
+                basic elements; the bands, labels, and notes are annotations.</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Seven types -->
+    <section class="sec" id="types" aria-labelledby="types-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="types-heading">Seven <em>types</em></h2>
+          <p class="section-head__note">Coding started from five types found in an earlier study of bar charts and
+            ended with seven. Fig. 4 puts all seven on one illustrative scatterplot. Pick a type, or touch an
+            annotation on the chart, to see it on its own.
           </p>
         </div>
 
-        <div class="method-shell fu d1">
-          <div class="method-summary" aria-label="Study summary">
-            <article class="method-metric">
-              <div class="method-metric-n">8,768</div>
-              <div class="method-metric-l">Retrieved images</div>
-            </article>
-            <article class="method-metric">
-              <div class="method-metric-n">2,677</div>
-              <div class="method-metric-l">Candidate charts</div>
-            </article>
-            <article class="method-metric">
-              <div class="method-metric-n">1,888</div>
-              <div class="method-metric-l">Charts analyzed</div>
-            </article>
-            <article class="method-metric">
-              <div class="method-metric-n">14</div>
-              <div class="method-metric-l">Chart types</div>
-            </article>
-            <article class="method-metric">
-              <div class="method-metric-n">7</div>
-              <div class="method-metric-l">Annotation types</div>
-            </article>
-            <article class="method-metric">
-              <div class="method-metric-n">0.886</div>
-              <div class="method-metric-l">Average Cohen's kappa</div>
-            </article>
+        <div class="anat">
+          <div class="anat__list in-view" role="group" aria-label="Annotation types">
+            <div class="anat__head">
+              <span class="label">Type</span>
+              <span class="label">Charts using it, of 1,888</span>
+            </div>
+            <ol class="tlist" id="tlist"></ol>
           </div>
 
-          <div class="method-layout">
-            <figure class="method-card method-card--figure">
-              <div class="method-card-head">Study Figure</div>
-              <div class="method-fig-wrap">
-                <div class="method-fig-stage">
-                  <img class="method-fig-img" src="assets/overview/design-space-paper-overview-transparent.png"
-                    alt="Cropped methodology figure from the paper showing collection filtering and coding workflow"
-                    loading="lazy" />
-                </div>
+          <figure class="anat__fig in-view" style="--d:1" aria-labelledby="fig4-cap">
+            <div class="f4__bar">
+              <p class="f4__status" id="f4-status" aria-live="polite"></p>
+              <div class="f4__ctrl">
+                <button type="button" class="icon-btn" id="f4-prev" aria-label="Previous type">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" /></svg>
+                </button>
+                <button type="button" class="icon-btn f4__play" id="f4-play" aria-label="Step through the seven types">
+                  <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+                  <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12" /></svg>
+                </button>
+                <button type="button" class="icon-btn" id="f4-next" aria-label="Next type">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+                </button>
               </div>
-              <figcaption>After duplicate removal and chart screening, 2,677 candidate charts remained. The final
-                analysis used 1,888 charts from one coder's labels across 14 chart types.</figcaption>
+            </div>
+            <div class="sheet f4__sheet">
+              <svg class="f4" id="f4" role="img"
+                aria-label="Scatterplot of test scores against hours spent studying for three groups of students, with one annotation of each type: a rectangle around the top right, an arrow, a sentence saying there is a positive correlation, crosses and circles marking students who underperform and outperform their peers, a dotted trend line and a dashed national average at 92, and an enlarged inset of the top right."></svg>
+            </div>
+            <div class="anat__read" id="anat-read" aria-live="polite"></div>
+            <figcaption class="figcap" id="fig4-cap"><span class="figcap__n">Fig. 4</span><span>An illustrative
+                example from the paper with one annotation of each type, redrawn here from its values so each one
+                can be shown on its own. <button type="button" class="link" data-zoom="fig4">See the paper's
+                  figure</button></span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Three questions, on six real charts -->
+    <section class="sec" id="questions" aria-labelledby="questions-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="questions-heading">Three <em>questions</em></h2>
+          <p class="section-head__note">The design space borrows its frame from Brehmer and Munzner's task typology.
+            Here it is applied to six charts from the corpus, as in Fig. 1.</p>
+        </div>
+
+        <ol class="qs in-view">
+          <li class="qs__q q--why">
+            <span class="qs__k">Why?</span>
+            <p>The <strong>task</strong> the annotation supports for the viewer: present, identify, summarize, or
+              compare.</p>
+          </li>
+          <li class="qs__q q--how">
+            <span class="qs__k">How?</span>
+            <p>The <strong>annotation types</strong> that carry it, alone or combined in an ensemble, and how often
+              each appears on each kind of chart.</p>
+          </li>
+          <li class="qs__q q--what">
+            <span class="qs__k">What?</span>
+            <p>The <strong>data</strong> the annotation is made from: the dataset itself, a calculation on it, or a
+              source outside it.</p>
+          </li>
+        </ol>
+
+        <ul class="gallery" id="gallery"></ul>
+      </div>
+    </section>
+
+    <!-- The design space -->
+    <section class="sec" id="space" aria-labelledby="space-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="space-heading">The design <em>space</em></h2>
+          <p class="section-head__note">Fig. 5, set out so you can read across it. Start from a task, follow a type
+            along its row, or read one kind of chart down its column.</p>
+        </div>
+
+        <div class="ds in-view" id="ds">
+          <div class="ds__bar">
+            <div class="ds__task">
+              <span class="label" id="task-l">Start from a task</span>
+              <div class="seg seg--sm" role="group" aria-labelledby="task-l" id="task-seg"></div>
+            </div>
+            <button type="button" class="btn btn--small btn--ghost" data-zoom="fig5">The paper's figure</button>
+          </div>
+
+          <div class="ds__body">
+            <div class="mx-wrap" id="mx-wrap">
+              <div class="mx" id="mx" role="group" aria-label="Annotation types by task and by chart type"></div>
+            </div>
+
+            <aside class="ds__read" aria-label="Reading">
+              <div class="panel__head">
+                <span class="label" id="ds-label">Reading the design space</span>
+                <button type="button" class="icon-btn" id="ds-clear" aria-label="Clear the selection" hidden>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 6l12 12M18 6L6 18" />
+                  </svg>
+                </button>
+              </div>
+              <div class="ds__readbody" id="ds-read" aria-live="polite"></div>
+            </aside>
+          </div>
+
+          <div class="ds__key">
+            <span class="ds__keyset"><span class="label">Why?</span><span class="kx kx--why"></span>supports the
+              task</span>
+            <span class="ds__keyset"><span class="label">How?</span><span class="kx kx--1"></span>6–25%<span
+                class="kx kx--2"></span>26–50%<span class="kx kx--3"></span>51% or more of that kind of chart</span>
+            <span class="ds__keyhint" id="mx-hint">Scroll sideways for all 14 chart types</span>
+          </div>
+        </div>
+
+        <!-- What? -->
+        <div class="what">
+          <div class="what__head in-view">
+            <h3 class="sub"><span class="q q--what">What?</span> Where the content comes from</h3>
+            <p class="prose">Once a type is chosen, its content has to come from somewhere. The paper sorts
+              annotations into three categories by their relation to the chart's data. A chart can have all
+              three.</p>
+          </div>
+          <ol class="srcs" id="srcs"></ol>
+
+          <div class="t1 in-view">
+            <div class="t1__head">
+              <h4 class="t1__title">Sources by annotation type</h4>
+              <p class="t1__sub">Share of 3,610 coded annotation instances. Table 1.</p>
+            </div>
+            <div class="t1__scroll">
+              <table class="t1__table" id="t1">
+                <caption class="visually-hidden">Table 1: share of 3,610 annotation instances by data source and
+                  annotation type</caption>
+              </table>
+            </div>
+            <p class="t1__key"><span class="kx kx--w1"></span>1–5%<span class="kx kx--w2"></span>5–10%<span
+                class="kx kx--w3"></span>10% or more</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ensembles -->
+    <section class="sec" id="ensembles" aria-labelledby="ensembles-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="ensembles-heading">When one type is not <em>enough</em></h2>
+          <p class="section-head__note">Where a single type could not carry the message, people combined several. The
+            paper calls these ensembles. It reports patterns, not counts: the designers' intentions were not
+            known.</p>
+        </div>
+
+        <div class="ens">
+          <div class="in-view">
+            <h3 class="sub">The most common ensembles</h3>
+            <ul class="combos">
+              <li>
+                <span class="combo" data-c="connector text"></span>
+                <p>Text adds the context; the connector shows which point it belongs to.</p>
+              </li>
+              <li>
+                <span class="combo" data-c="enclosure text"></span>
+                <p>Text adds the context; the enclosure identifies the text or sets it apart.</p>
+              </li>
+              <li>
+                <span class="combo" data-c="glyph color"></span>
+                <p>Color is often paired with glyphs to identify or compare categories.</p>
+              </li>
+              <li>
+                <span class="combo" data-c="color enclosure text"></span>
+                <p>Enclosure and color identify a region; text presents context that helps the identification.</p>
+              </li>
+              <li>
+                <span class="combo" data-c="enclosure connector text"></span>
+                <p>The enclosure identifies the data, text gives the details, and the connector ties the two
+                  together.</p>
+              </li>
+            </ul>
+            <p class="ens__note">With four or more types together, annotations often encoded the same thing twice. A
+              simpler two-type ensemble might suffice.</p>
+          </div>
+
+          <div class="in-view" style="--d:1">
+            <h3 class="sub">How the parts depend on each other</h3>
+            <ul class="deps">
+              <li>
+                <svg class="deps__ill" viewBox="0 0 120 64" aria-hidden="true">
+                  <path class="g-ax" d="M10 56H112M10 56V8" />
+                  <circle class="g-dot" cx="32" cy="40" r="3" />
+                  <circle class="g-dot" cx="52" cy="30" r="3" />
+                  <circle class="g-dot" cx="92" cy="20" r="3" />
+                  <circle class="g-ring" cx="72" cy="26" r="7" />
+                  <circle class="g-warmfill" cx="72" cy="26" r="3.4" />
+                </svg>
+                <div>
+                  <h4><span class="deps__sym" aria-hidden="true">→</span>One-way</h4>
+                  <p>One annotation conveys its message without the other; the second only reinforces it. In Fig. 4,
+                    the red and green of the crosses and circles add no new information; they emphasize the glyphs.
+                    <button type="button" class="link" data-show="color">Show me</button></p>
+                </div>
+              </li>
+              <li>
+                <svg class="deps__ill" viewBox="0 0 120 64" aria-hidden="true">
+                  <path class="g-ax" d="M10 56H112M10 56V8" />
+                  <circle class="g-dot" cx="32" cy="40" r="3" />
+                  <circle class="g-dot" cx="52" cy="34" r="3" />
+                  <circle class="g-warmfill" cx="88" cy="38" r="3.4" />
+                  <path class="g-warm" d="M60 16 C 74 16, 84 22, 86 32" />
+                  <path class="g-warm" d="M81.5 29.5 L 86.5 34 L 89 27.6" />
+                  <text class="g-text" x="20" y="19">a note</text>
+                </svg>
+                <div>
+                  <h4><span class="deps__sym" aria-hidden="true">⇄</span>Two-way</h4>
+                  <p>Each needs the other to convey its message. In Fig. 4, the arrow and the sentence rely on each
+                    other; without either one, the message is unclear. <button type="button" class="link"
+                      data-show="connector text">Show me</button></p>
+                </div>
+              </li>
+            </ul>
+            <p class="ens__note">An ensemble of N distinct annotations is an N-annotation ensemble: two-, three-, and
+              four-annotation ensembles all appear. Drawings here are made for this page.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Case studies -->
+    <section class="sec" id="cases" aria-labelledby="cases-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="cases-heading">Three <em>case studies</em></h2>
+          <p class="section-head__note">For each, the authors took a professionally designed chart, removed every
+            annotation, and added them back task by task, guided by the three questions and by the article the
+            chart ran with.</p>
+        </div>
+
+        <div class="cs in-view" id="cs">
+          <div class="cs__top">
+            <div class="seg" role="group" aria-label="Case study" id="cs-seg"></div>
+          </div>
+          <div class="cs__intro" id="cs-intro"></div>
+
+          <div class="cs__body">
+            <figure class="cs__fig">
+              <div class="sheet cs__sheet">
+                <div class="cs__art" id="cs-art"></div>
+              </div>
+              <ol class="cs__track" id="cs-beats" aria-label="Steps"></ol>
+              <div class="cs__tools">
+                <button type="button" class="link cs__hold" id="cs-hold"
+                  aria-label="Hold to see the chart without its annotations">Hold to see it bare</button>
+                <button type="button" class="link" id="cs-zoom">Full size</button>
+              </div>
+              <figcaption class="figcap" id="cs-cap"></figcaption>
             </figure>
 
-            <div class="method-card method-card--copy">
-              <div class="method-card-head">Study Process</div>
-              <ol class="method-steps">
-                <li class="method-step">
-                  <div class="method-step-head">
-                    <span class="method-step-k">Collection</span>
-                    <span class="method-step-v">Google Images</span>
-                  </div>
-                  <p>Retrieved 8,768 annotated chart images across 14 chart types.</p>
-                </li>
-                <li class="method-step">
-                  <div class="method-step-head">
-                    <span class="method-step-k">Screening</span>
-                    <span class="method-step-v">2,677 candidates</span>
-                  </div>
-                  <p>Removed 1,244 duplicates and excluded 4,847 charts that were out of scope, unclear, unannotated,
-                    or not based on real data.</p>
-                </li>
-                <li class="method-step">
-                  <div class="method-step-head">
-                    <span class="method-step-k">Coding</span>
-                    <span class="method-step-v">7 final types</span>
-                  </div>
-                  <p>Two coders worked in multiple rounds, starting from five annotation types from prior work and
-                    refining them into seven recurring types.</p>
-                </li>
-              </ol>
-
-              <p class="method-note"><strong>Reliability:</strong> The first coder retained 1,888 charts for analysis.
-                The average Cohen's kappa across coders was 0.886.</p>
+            <div class="cs__side">
+              <div class="cs__step" id="cs-step" aria-live="polite"></div>
+              <ol class="cs__ens" id="cs-ens"></ol>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <!-- ── Taxonomy ──────────────────────────────────────── -->
-      <section class="section" id="taxonomy" aria-label="Taxonomy">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">04 · Taxonomy</span>
-          <h2 class="sec-title">Seven Annotation Types</h2>
-          <p class="sec-desc">These seven cards summarize the annotation types reported in the paper. Open a card to see
-            the tasks each type supports, common ensembles, likely data sources, and where it appears in the case
-            studies.</p>
+    <!-- Method -->
+    <section class="sec" id="method" aria-labelledby="method-heading" tabindex="-1">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 id="method-heading">How the study <em>worked</em></h2>
+          <p class="section-head__note">Sect. 4 of the paper. The charts and both coders' labels are in the
+            <a class="u" href="https://shorturl.at/bAGM1" target="_blank" rel="noopener">supplemental materials</a>.
+          </p>
         </div>
-        <div class="tax-shell fu d1">
-          <div class="tax-toolbar">
-            <div class="tax-toolbar-copy">
-              <div class="tax-toolbar-k">Filter and Explore</div>
-              <p class="tax-toolbar-desc">Filter by task. The same initials shown on the filters are repeated on each
-                annotation card.</p>
-            </div>
-          </div>
-          <div class="tax-controls-row">
-            <div class="tax-controls" id="tax-controls" role="toolbar" aria-label="Filter annotation types by analytic task"></div>
-            <div class="tax-status" id="tax-status" aria-live="polite"></div>
-          </div>
-          <div class="tax-grid" id="tax-grid"></div>
-        </div>
-      </section>
 
-      <!-- ── Case Studies ──────────────────────────────────── -->
-      <section class="section" id="case-studies" aria-label="Case Studies">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">05 · Case Studies</span>
-          <h2 class="sec-title">Case Studies</h2>
-          <p class="sec-desc">The paper applies the design space to three published charts. Each case shows how
-            annotation choices support a task, take a visual form, and draw from a data source.</p>
-        </div>
-        <div class="cs-shell fu d1">
-          <div class="cs-toolbar">
-            <div class="cs-toolbar-copy">
-              <div class="cs-toolbar-k">How to Read</div>
-              <p class="cs-toolbar-desc">Select a case. The left side shows the annotated figure and main points. The
-                right side lists the annotation rows by task, form, and source.</p>
-            </div>
+        <div class="method__grid">
+          <div class="in-view">
+            <h3 class="sub">Building the corpus</h3>
+            <ol class="funnel">
+              <li>
+                <span class="funnel__n">8,768</span>
+                <p><strong>Images from Google Images</strong>, scraped with queries of the form “annotated {chart
+                  type}” across 14 common chart types.</p>
+              </li>
+              <li>
+                <span class="funnel__n funnel__n--step" aria-hidden="true"></span>
+                <p><strong>1,244 duplicates removed.</strong></p>
+              </li>
+              <li>
+                <span class="funnel__n funnel__n--step" aria-hidden="true"></span>
+                <p><strong>4,847 more excluded</strong>: chart types outside the study, charts that were not clearly
+                  visible, charts without annotations, and charts that did not show real data.</p>
+              </li>
+              <li>
+                <span class="funnel__n">2,677</span>
+                <p><strong>Images coded</strong> independently by two coauthors, in several rounds with frequent
+                  meetings of all the authors. The starting themes were five types from a prior study: enclosure,
+                  connector, text, glyph, and color.</p>
+              </li>
+              <li>
+                <span class="funnel__n funnel__n--step" aria-hidden="true"></span>
+                <p><strong>Agreement: average Cohen's κ of 0.886.</strong> The coders kept 1,888 and 1,844 images
+                  with a chart type in the study and an annotation not coded as “no annotation”, “undetermined”, or
+                  “other”.</p>
+              </li>
+              <li class="funnel__end">
+                <span class="funnel__n">1,888</span>
+                <p><strong>Annotated charts analyzed</strong>, using the first coder's labels.</p>
+              </li>
+            </ol>
           </div>
-          <div class="cs-controls-row">
-            <div class="cs-tabs" id="cs-tabs" role="tablist" aria-label="Case studies"></div>
-            <div class="cs-status" id="cs-status" aria-live="polite"></div>
-          </div>
-          <div class="cs-panels" id="cs-panels"></div>
-        </div>
-      </section>
 
-      <!-- ── Citation ──────────────────────────────────────── -->
-      <section class="section" id="cite">
-        <div class="sec-head fu">
-          <span class="sec-eyebrow">06 · Citation</span>
-          <h2 class="sec-title">Cite This Work</h2>
+          <div class="in-view" style="--d:1">
+            <h3 class="sub">The corpus by chart type</h3>
+            <ol class="ctypes" id="ctypes"></ol>
+            <p class="ctypes__note">From Fig. 5. The mix was not uniform, which the paper reads as a sign of how
+              popular each chart type is.</p>
+          </div>
         </div>
-        <div class="cite-wrap fu d1">
-          <pre class="cite-block" id="bibtext">@article{rahman2024annotation,
-  title   = {A Qualitative Analysis of Common Practices in
-             Annotations: A Taxonomy and Design Space},
-  author  = {Rahman, Md Dilshadur and Quadri, Ghulam Jilani
-             and Doppalapudi, Bhavana and Szafir, Danielle Albers
-             and Rosen, Paul},
-  journal = {IEEE Transactions on Visualization and Computer Graphics},
-  year    = {2024},
-  doi     = {10.1109/TVCG.2025.3565855}
+      </div>
+    </section>
+
+    <!-- Discussion -->
+    <section class="discuss" aria-labelledby="discuss-heading">
+      <div class="wrap discuss__inner">
+        <div class="in-view">
+          <p class="label discuss__kicker">Using the design space</p>
+          <h2 id="discuss-heading" class="discuss__quote">A structured way to think about <em>constructing</em> and
+            critiquing annotations.</h2>
+          <ul class="uses">
+            <li>
+              <h4>Construct and critique</h4>
+              <p>Combining common practice for data, task, and encoding, it lets an author decide in an organized
+                way which annotations to add, and critique others' by naming the parts they used.</p>
+            </li>
+            <li>
+              <h4>Open up the space</h4>
+              <p>The range of possible annotation encodings was not obvious even to the authors at first. The design
+                space lists the types to choose from.</p>
+            </li>
+            <li>
+              <h4>Consider common practice</h4>
+              <p>Seeing which types are frequent and infrequent on each chart type encourages thought about common
+                strategies, and could inform tools that suggest annotations.</p>
+            </li>
+          </ul>
+        </div>
+        <div class="in-view" style="--d:1">
+          <h3 class="sub">What this study does not show</h3>
+          <ul class="limits">
+            <li>Nothing is known about the annotators' expertise or the tools they used.</li>
+            <li>Without talking to the designers, their goals could only be inferred, and viewers may not read an
+              annotation the way it was meant.</li>
+            <li>The taxonomy and design space are qualitative; how well each annotation works was not evaluated.</li>
+            <li>Only static charts were studied. Dynamic, interactive, and less frequent chart types may expand the
+              design space.</li>
+          </ul>
+          <p class="discuss__next">Next steps the paper names: empirical tests of annotation types across chart
+            types, annotations in interactive visualizations, the views of professionals, and whether viewers read
+            annotations as designers intend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cite -->
+    <section class="cite" id="cite" aria-labelledby="cite-heading">
+      <div class="wrap cite__inner">
+        <div>
+          <h2 id="cite-heading">Cite the <em>paper</em></h2>
+          <p class="cite__ref">
+            Md Dilshadur Rahman, Ghulam Jilani Quadri, Bhavana Doppalapudi, Danielle Albers Szafir, and Paul Rosen.
+            A Qualitative Analysis of Common Practices in Annotations: A Taxonomy and Design Space.
+            <em>IEEE Transactions on Visualization and Computer Graphics</em>, 31(1):360–370, 2025.
+            <a class="u" href="https://doi.org/10.1109/TVCG.2024.3456359" target="_blank"
+              rel="noopener">doi:10.1109/TVCG.2024.3456359</a>
+          </p>
+          <p class="cite__more">
+            Presented at IEEE VIS 2024. Preprint on
+            <a class="u" href="https://arxiv.org/abs/2306.06043" target="_blank" rel="noopener">arXiv:2306.06043</a>.
+            The annotated charts and coding are in the
+            <a class="u" href="https://shorturl.at/bAGM1" target="_blank" rel="noopener">supplemental materials</a>.
+          </p>
+        </div>
+        <div class="bib">
+          <div class="bib__head">
+            <span class="label">BibTeX</span>
+            <button class="btn btn--small btn--ghost" type="button" data-copy="paper-bibtex">Copy</button>
+          </div>
+          <pre id="paper-bibtex">@article{rahman2025qualitative,
+  author  = {Rahman, Md Dilshadur and
+             Quadri, Ghulam Jilani and
+             Doppalapudi, Bhavana and
+             Szafir, Danielle Albers and
+             Rosen, Paul},
+  title   = {A Qualitative Analysis of Common
+             Practices in Annotations: A
+             Taxonomy and Design Space},
+  journal = {IEEE Transactions on Visualization
+             and Computer Graphics},
+  volume  = {31},
+  number  = {1},
+  pages   = {360--370},
+  year    = {2025},
+  doi     = {10.1109/TVCG.2024.3456359}
 }</pre>
-          <button class="cite-copy" data-copy-bib onclick="copyBib()">Copy BibTeX</button>
         </div>
-      </section>
-
-    </div><!-- /page -->
+      </div>
+    </section>
   </main>
 
-  <footer class="footer">
-    © 2024 Md Dilshadur Rahman, Ghulam Jilani Quadri, Bhavana Doppalapudi, Danielle Albers Szafir, Paul Rosen
-    &nbsp;·&nbsp;
-    <a href="https://arxiv.org/abs/2306.06043" target="_blank">arXiv:2306.06043</a> &nbsp;·&nbsp;
-    <a href="https://ieeexplore.ieee.org/abstract/document/11130921" target="_blank">IEEE Transactions on Visualization
-      and Computer Graphics</a> &nbsp;·&nbsp;
-    <a href="https://shorturl.at/bAGM1" target="_blank">Supplemental Materials</a>
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <p>
+        <a class="u quiet" href="https://dilshadur.com/" target="_blank" rel="noopener">dilshadur.com</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="u quiet" href="https://annotation-survey.netlify.app/" target="_blank" rel="noopener">Annotation
+          Survey</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="u quiet" href="https://vis-annotations.github.io/annotation-design/" target="_blank"
+          rel="noopener">Annotation Design</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="u quiet" href="https://dilshadurrahman58.github.io/annotation-strategies/" target="_blank"
+          rel="noopener">Annotation Strategies</a>
+        <span class="sep" aria-hidden="true">·</span>
+        <a class="u quiet" href="https://dilshadurrahman58.github.io/annotation-grammar/" target="_blank"
+          rel="noopener">AnnoGram</a>
+      </p>
+      <p><a class="u quiet" href="#top">Back to top ↑</a></p>
+    </div>
   </footer>
 
-  <!-- Taxonomy drawer overlay + panel -->
-  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()" aria-hidden="true"></div>
-  <div class="tax-drawer" id="tax-drawer" role="dialog" aria-modal="true" aria-hidden="true"></div>
+  <!-- Full-size figure -->
+  <dialog class="zoom" id="zoom" aria-label="Figure at full size">
+    <button type="button" class="icon-btn zoom__close" id="zoom-close" aria-label="Close full-size figure">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+    <div class="zoom__stage" id="zoom-stage"><img id="zoom-img" alt="" /></div>
+  </dialog>
 
-  <!-- Back to top -->
-  <button class="back-to-top" id="back-to-top" aria-label="Back to top" title="Back to top">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-      stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <polyline points="18 15 12 9 6 15" />
-    </svg>
-  </button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <!-- Nav dots -->
-  <nav class="nav-dots" aria-label="Section navigation">
-    <button class="nav-dot active" data-t="overview" title="Overview"></button>
-    <button class="nav-dot" data-t="design-space" title="Design Space"></button>
-    <button class="nav-dot" data-t="methodology" title="Methodology"></button>
-    <button class="nav-dot" data-t="taxonomy" title="Taxonomy"></button>
-    <button class="nav-dot" data-t="case-studies" title="Case Studies"></button>
-    <button class="nav-dot" data-t="cite" title="Citation"></button>
-  </nav>
-
-  <script src="script.js" defer></script>
+  <script src="data/paper.js"></script>
+  <script src="assets/app.js"></script>
 </body>
 
 </html>
